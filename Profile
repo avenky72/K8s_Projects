@@ -1,0 +1,19 @@
+alias myc='mysql -u root --protocol=tcp -pmysql'
+alias kc='kubectl get rc,pods,svc,deploy -o wide -A'
+alias k='kubectl '
+export JAVA_HOME=/root/jdk1.8.0_251
+export PATH=.:$JAVA_HOME/bin:$PATH:/test/k8s-mini/k8s-mysql-kafka-spark/kafka_2.13-3.9.0/bin
+# create virtaul env
+# python3 -m venv venv --prompt mysql-webapp
+
+alias clean='docker system prune -a -f'
+alias build='clean; docker build -f Dockerfile -t atulv1/webapp .; docker push atulv1/webapp'
+
+fname="webapp-deployment.yaml"
+
+alias ka='kubectl apply -f $fname '
+alias kd='kubectl delete -f $fname '
+
+alias log='kubectl logs -n mysql-webapp deployment.apps/webapp-deployment'
+
+

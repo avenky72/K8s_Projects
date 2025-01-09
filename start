@@ -1,0 +1,31 @@
+
+LOGDIR="./logs"
+
+# Deploy mysql and do port forward
+kubectl apply -f mysql8-deployment.yaml
+sleep 10
+
+[[ ! -d $LOGDIR ]] && mkdir $LOGDIR
+echo "MySQL Port forward ..."
+nohup kubectl port-forward -n mysql-webapp service/mysql 3306:3306 > $LOGDIR/3306.port-forward.log 2>&1 &
+
+sleep 20
+
+# Check config
+kubectl get rc,pods,hpa,svc,deployment -o wide -A
+echo "========================================================================================================="
+
+# Load Sample data with 5K records
+./generate_students_record.py 5000
+
+# Deploy web app
+kubectl apply -f webapp-deployment.yaml
+sleep 10
+
+echo "Webapp Port 5000 forward ..."
+nohup kubectl port-forward -n mysql-webapp service/webapp-service  5000:5000  > $LOGDIR/5000.port-forward.log 2>&1 &
+
+echo "========================================================================================================="
+# Get status
+kubectl get pods,hpa,svc,rc,deployment -o wide -A
+

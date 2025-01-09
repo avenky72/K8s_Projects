@@ -1,0 +1,70 @@
+
+#---
+#apiVersion: v1
+#kind: Namespace
+#metadata:
+#  name: mysql-webapp
+
+
+
+##################################################
+## To set env variables
+## The port 500 is used for webapp not for webapi
+## This deployment uses 6000 port but not used
+##################################################
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-deployment
+  namespace: mysql-webapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webapp
+  template:
+    metadata:
+      labels:
+        app: webapp
+    spec:
+      containers:
+      - name: webapp
+        image: atulv1/webapp:latest  # Replace with your actual container image
+        ports:
+        - containerPort: 5000  # Assuming the app runs on port 6000
+        env:
+          - name: MYSQL_HOST
+            value: mysql.mysql-webapp.svc.cluster.local        ##### SYNTAX: servicename.namespace.svc.cluster.local
+          - name: MYSQL_USER
+            value: "root"
+          - name: MYSQL_PASSWORD
+            value: "mysql"
+          - name: MYSQL_PORT
+            value: "3306"
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "256Mi"
+            cpu: "500m"
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: webapp-service
+  namespace: mysql-webapp
+spec:
+  selector:
+    app: webapp
+  ports:
+    - protocol: TCP
+      port: 5000  # Exposes port 6000 externally
+      targetPort: 5000  # Target port of the container
+#  type: ClusterIP  # Use ClusterIP or NodePort if LoadBalancer isn't available
+# type: LoadBalancer  # Use ClusterIP or NodePort if LoadBalancer isn't available
+

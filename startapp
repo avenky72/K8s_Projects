@@ -1,0 +1,7 @@
+#!/bin/bash
+## This script will start the flask based API service
+## inside the container
+
+cd /app
+. ./venv/bin/activate
+python3 ./webapp.py

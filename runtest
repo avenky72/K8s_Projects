@@ -1,0 +1,27 @@
+
+####
+#NOTE:  Using curl to call REST API
+####
+
+echo "Get the student records count" 
+curl -X GET "http://127.0.0.1:5000/api/students/count"
+
+echo "Get random 20 records..."
+curl -X GET "http://127.0.0.1:5000/api/get_students?n=20"
+
+echo "Run a query ..."
+curl -X POST http://127.0.0.1:5000/api/run_query -H "Content-Type: application/json" -d '{"query": "select * from students where math>90 and physics=100;"}'
+
+echo "Delete a record ..."
+curl -X POST http://127.0.0.1:5000/api/run_query -H "Content-Type: application/json" -d '{"query": "select * from students where student_id=104910;"}'
+curl -X DELETE http://127.0.0.1:5000/api/delete_id -H "Content-Type: application/json" -d '{"id": 104910}'
+curl -X POST http://127.0.0.1:5000/api/run_query -H "Content-Type: application/json" -d '{"query": "select * from students where student_id=104910;"}'
+
+echo "Get 10, 20, 30... student records"
+for i in `seq 10 20 30`
+do
+  echo "############# $i Records ######################"
+  curl -X GET "http://127.0.0.1:5000/api/get_students?n=$i"
+done
+
+
