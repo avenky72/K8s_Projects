@@ -10,11 +10,6 @@ RUN  apt update -y && apt upgrade -y \
   && apt install -y openssh-server python3-pip python3.10-venv \
   && apt install -y sudo lsof curl iputils-ping net-tools vim mysql-client \
   && rm -rf /var/lib/apt/lists/*
-#RUN useradd -ms /bin/bash apprunner
-#RUN usermod -aG sudo apprunner
-RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' '/etc/ssh/sshd_config'
-RUN sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' '/etc/ssh/sshd_config'
-RUN sed -i 's/#PermitEmptyPasswords no/PermitEmptyPasswords yes/' '/etc/ssh/sshd_config'
 RUN mkdir /app
 WORKDIR /app
 ENV PATH=".:/app:${PATH}"
