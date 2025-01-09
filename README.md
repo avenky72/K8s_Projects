@@ -19,7 +19,7 @@ Check both deployment:
 
 ![image](https://github.com/user-attachments/assets/c7708f78-7d35-43c9-9a20-87282b5f73b0)
 
-Now the reployment is completed.
+Now the deployment is completed.
 
 
 Next Steps to do port forwarding for both MySQL and Webapp deployment pods using 'kubectl port-forward'
