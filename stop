@@ -1,6 +1,0 @@
-kubectl delete -f mysql8-deployment.yaml
-kubectl delete -f webapp-deployment.yaml
-ids=`ps -ef | grep forward | awk  '{print $2}'`
-kill -9 $ids
-kubectl get rc,pods,svc,deploy -o wide -A
-
