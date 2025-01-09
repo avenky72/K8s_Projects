@@ -22,11 +22,11 @@ Check both deployment:
 Now the reployment is completed.
 
 
-Next Steps to do port forwarding for both MySQL and Webapp deployment pods.
+Next Steps to do port forwarding for both MySQL and Webapp deployment pods using 'kubectl port-forward'
 
 Now, load sample data into MySQL DB using generate_students_record.py script.
 
-Now all set to call the flask based REST API in webapp POD.
+Now all set to call the flask based REST API available in webapp POD.
 
 Each curl call will call the webapp which will conect with the MySQL pod to collect data from the DB and display on the console.
 
